@@ -2,21 +2,53 @@
 {% block content %}
 
 
-<form method="post" action="/resultado">
+<form method="post" action="/operasBas">
     <div>
         <label for="num1" class="form-label">Numero 1: </label>
         <input type="number" class="form-control" id="num1" name="num1">
 
     </div>
 
+
+    
     <div class="mb-3">
 
     <label for="num2" class="form-label">Numero 2: </label>
         <input type="number" class="form-control" id="num2" name="num2">
-    
+        
+        
     </div>
 
-    <button type="submit" class="btn btn-primary">Calcular</button>
+    
+
+
+    <label class="form-label">Seleccionar la operacion </label>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="operacion" value="suma">
+                <label class="form-check-label">Sumar</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="operacion" value="resta">
+                <label class="form-check-label">Restar</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="operacion" value="multiplicacion">
+                <label class="form-check-label">Multiplicacion</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="operacion" value="division">
+                <label class="form-check-label">Division</label>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Calcular</button>  
+
 </form>
+
+<h1>Resultado: {{res}}</h1>
 
 {% endblock %}
