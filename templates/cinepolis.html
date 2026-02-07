@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% import "_macros.html" as macros %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cinepolis.css') }}">
+
+<div class="cine-container">
+    
+    <div class="top-label">Cinepolis</div>
+
+    <form action="/cinepolis" method="POST" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+        <div class="main-row">
+            <fieldset class="box-entradas">
+                <legend>Entradas</legend>
+                
+                <div class="input-container">
+                    <div class="form-group-row">
+                        <label>Nombre</label>
+                        <div class="field-wrapper">
+                            {{ form.nombre(class="form-control-custom") }}
+                            {% if form.nombre.errors %}
+                                <span class="validation-error">{{ form.nombre.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-container">
+                    <div class="form-group-row">
+                        <label>Cantidad Compradores</label>
+                        <div class="field-wrapper">
+                            {{ form.compradores(class="form-control-custom") }}
+                            {% if form.compradores.errors %}
+                                <span class="validation-error">{{ form.compradores.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="form-group-row">
+                        <label>Tarjeta Cineco</label>
+                        <div class="field-wrapper">
+                            <div class="radio-group">
+                                {% for subfield in form.tarjeta %}
+                                    <label style="font-weight: normal; margin-bottom: 0;">
+                                        {{ subfield(style="margin-right: 5px;") }} {{ subfield.label.text }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="form-group-row">
+                        <label>Cantidad De Boletas</label>
+                        <div class="field-wrapper">
+                            {{ form.boletas(class="form-control-custom") }}
+                            {% if form.boletas.errors %}
+                                <span class="validation-error">{{ form.boletas.errors[0] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="box-salidas">
+                <legend>Salidas</legend>
+                
+                <div class="form-group-row" style="justify-content: center;">
+                    <label>Valor a Pagar</label>
+                    <input type="text" class="form-control-custom" readonly 
+                           value="{{ '${:,.2f}'.format(total) if total is defined else '' }}">
+                </div>
+                {% if total is not defined and form.errors %}
+                     <div style="text-align: center; margin-top: 10px; color: #FFFF00; font-size: 0.8rem;">
+                         Verifique los errores en el formulario
+                     </div>
+                {% endif %}
+            </fieldset>
+        </div>
+
+        <div class="logo-center">
+            <div class="cinepolis-logo-text">Cinépolis<span style="font-size: 1rem; vertical-align: top;">®</span></div>
+            <div class="cinepolis-slogan">LA CAPITAL DEL CINE</div>
+        </div>
+
+        <fieldset class="box-acciones">
+            <legend>Acciones</legend>
+            <button type="submit" class="btn-custom">Procesar</button>
+            <a href="/cinepolis" class="btn-custom">Salir</a>
+        </fieldset>
+
+    </form>
+</div>
+{% endblock %}
